@@ -2,6 +2,7 @@
 // console.log(data);
 var doc = document;
 var navElem = doc.querySelector('.nav');
+var wrapperElem = doc.querySelector('.l-wrapper');
 var dataElem = doc.querySelector('.data__list');
 var dataItemClass = 'data__item';
 var dataItemVisibleClass = dataItemClass + '--visible';
@@ -19,6 +20,7 @@ function fillPage () {
 
         pos++;
     }
+
 }
 
 var dataItemObj = function () {
@@ -58,6 +60,7 @@ var dataItemObj = function () {
 
     function createContent() {
         var dataItem = doc.createElement('div');
+        var dataItems = '';
         dataItem.id = 'content-' + key;
         dataItem.classList.add( dataItemClass );
 
@@ -65,7 +68,17 @@ var dataItemObj = function () {
             dataItem.classList.add( dataItemVisibleClass );
         }
 
-        var dataItems = data.map( getData ).join('');
+        if ( key == 'defData') {
+            dataItems = data.map( getData ).join('');
+        }
+        else {
+            var newData = dataSortByKey();
+            for ( dataKey in newData ) {
+                dataItems += '<tr><th colspan=6>' + dataKey + '</th></tr>';
+                var newDataItem = newData[ dataKey ];
+                dataItems += newDataItem.map( getData ).join('');
+            }
+        }
 
         dataItems = '<table>' + dataItems + '</table>';
 
@@ -82,7 +95,16 @@ var dataItemObj = function () {
             var propOut = '';
             var propName = prop;
             var propValue = item[ propName ];
-            // console.log( propName + ': ' + propValue );
+
+            if ( prop == 'sizesMode' ) {
+                continue;
+            }
+            if ( prop === 'cyr' ) {
+                if ( propValue ) {
+                    cyrClass = 'cyr';
+                }
+                continue;
+            }
 
             if ( Array.isArray( propValue ) ) {
                 propOut = dataItemsToList( propValue );
@@ -90,13 +112,12 @@ var dataItemObj = function () {
             else if ( typeof propValue  == 'object' ) {
                 propOut += dataItemsToList( propValue.list );
             }
-            else if ( typeof propValue  == 'boolean' ) {
-                if ( prop === 'cyr' && propValue ) {
-                    cyrClass = 'cyr';
-                }
-            }
             else {
                 propOut += propValue;
+            }
+
+            if ( prop == 'sizes' && item['sizesMode'] == 'or' ) {
+                propOut += item['sizesMode'];
             }
 
             if ( propOut ) {
@@ -109,7 +130,37 @@ var dataItemObj = function () {
         return out;
     }
 
-    function uniq( list ) {
+    function dataSortByKey() {
+
+        var newData = {};
+
+        for (var i = 0; i < data.length; i++) {
+            var dataItem = data[i];
+            var keyItems = data[i][ key ];
+
+            if ( Array.isArray( keyItems ) ) {
+
+                for (var k = 0; k < keyItems.length; k++) {
+                    if ( !newData[keyItems[k]] ) {
+                        newData[keyItems[k]] = [];
+                    }
+                    newData[keyItems[k]].push(dataItem);
+                };
+            }
+            else {
+
+                if ( !newData[keyItems] ) {
+                    newData[keyItems] = [];
+                }
+                newData[keyItems].push(dataItem);
+
+            }
+        };
+
+        return newData;
+    }
+
+    function uniq ( list ) {
         var seen = {};
         return list.filter(function(item) {
             return seen.hasOwnProperty(item) ? false : (seen[item] = true);
@@ -117,17 +168,25 @@ var dataItemObj = function () {
     }
 
     function dataItemsToList ( dataItems ) {
-        // console.log( 'dataItemsToList ' );
         var list = dataItems.map( itemToLi ).join('');
         list = '<ul class=\'content__list\'>' + list + '</ul>';
-        // console.log(list );
         return list;
     }
 
     function itemToLi ( item ) {
+        if ( item.indexOf('LJSUP') >= 0 ){
+            item = wrapJiraLink ( item );
+        }
         return '<li class=\'content__item\'>' + item + '</li>';
     }
 
+    function wrapJiraLink ( str ) {
+        var jiraTaskUrl = jiraLink + str;
+        var out = '<a href=\'' + jiraTaskUrl + '\'>' + str + '</a>';
+        return out;
+    }
+
 } // End dataItemObj
+
 
 fillPage ();
