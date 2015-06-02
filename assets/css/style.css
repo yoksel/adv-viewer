@@ -1,11 +1,30 @@
+@charset "UTF-8";
 BODY {
   padding: 1em;
   background: #FFF;
 }
 
+UL {
+  margin: 0;
+  padding: 0;
+}
+
+LI {
+  list-style: none;
+}
+LI:before {
+  content: "— ";
+  color: rgba(0, 0, 0, 0.6);
+}
+
+TD {
+  padding: .5em;
+  vertical-align: top;
+}
+
 .l-wrapper {
-  min-width: 300px;
-  max-width: 700px;
+  min-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 1em;
   -webkit-box-sizing: border-box;
@@ -25,11 +44,25 @@ BODY {
 }
 
 .data__list {
-  border: 2px solid orange;
+  /*border: 2px solid orange;*/
 }
 
 .data__item {
-  border: 1px solid gold;
+  display: none;
+  /*border: 1px solid gold;*/
+}
+
+.data__item--visible {
+  display: block;
+  /*border: 1px solid yellowgreen;*/
+}
+
+.users--cyr {
+  background: #e0f5d6;
+}
+
+.users--noneCyr {
+  background: #d6ebf5;
 }
 
 /*# sourceMappingURL=style.unprefixed.css.map */

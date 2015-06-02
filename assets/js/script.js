@@ -2,39 +2,53 @@
 // console.log(data);
 var doc = document;
 var navElem = doc.querySelector('.nav');
-var dataElem = doc.querySelector('.data');
+var dataElem = doc.querySelector('.data__list');
+var dataItemClass = 'data__item';
+var dataItemVisibleClass = dataItemClass + '--visible';
 
 function fillPage () {
 
+    var pos = 0;
+
     for ( key in map ) {
         var item = new dataItemObj;
-        item.init( { key: key } );
+        item.init( {
+            pos: pos,
+            key: key
+            } );
+
+        pos++;
     }
 }
 
 var dataItemObj = function () {
     var linkElem;
     var key;
+    var pos = 0;
     var contentElem;
     var test;
 
     this.init = function ( params ) {
         key = params.key;
+        pos = params.pos;
         linkElem = createLink();
         contentElem = createContent();
 
-        console.log( linkElem );
-
         linkElem.onclick = function() {
-            // linkOnClick();
-            // createContent();
+            var visibleElems = doc.querySelectorAll('.' + dataItemVisibleClass);
+
+            for (var i = 0; i < visibleElems.length; i++) {
+                visibleElems[i].classList.remove( dataItemVisibleClass );
+            };
+
+            contentElem.classList.add( dataItemVisibleClass );
         }
     }
 
     function createLink() {
         var liItem = doc.createElement('a');
         liItem.setAttribute('id', key);
-        liItem.setAttribute('href', '#' + key);
+        liItem.setAttribute('href', '#');
         liItem.setAttribute('class', 'nav__link');
         liItem.innerText = map[key];
 
@@ -44,40 +58,55 @@ var dataItemObj = function () {
 
     function createContent() {
         var dataItem = doc.createElement('div');
-        dataItem.setAttribute('id', 'content-' + key);
-        dataItem.setAttribute('class', 'data__item');
+        dataItem.id = 'content-' + key;
+        dataItem.classList.add( dataItemClass );
 
+        if ( pos == 0 ) {
+            dataItem.classList.add( dataItemVisibleClass );
+        }
 
-        console.log( 'conent ')
-        console.log(key);
+        var dataItems = data.map( getData ).join('');
 
-        var dataItems = data.map( getData );
-        dataItems = uniq( dataItems );
-        var list = dataItemsToList( dataItems );
-        list = '<ul class=\'data__list\'>' + list + '</ul>';
+        dataItems = '<table>' + dataItems + '</table>';
 
-        dataItem.innerHTML = list;
+        dataItem.innerHTML = dataItems;
         var dataContent = dataElem.insertBefore(dataItem, null);
         return dataContent;
-
-        // console.log('dataItems');
-        // console.log(dataItems);
-
-        // console.log( list);
-        return list;
-    }
-
-    function printDataByKey() {
-        // console.log( item[key] );
-        console.log( 'printDataByKey' );
-
     }
 
     function getData ( item ) {
-        // console.log( ' --- getData --- ');
-        // console.log( key );
-        // console.log( item );
-        return item[ key ];
+        var out = '';
+        var cyrClass = 'noneCyr';
+
+        for ( prop in item ) {
+            var propOut = '';
+            var propName = prop;
+            var propValue = item[ propName ];
+            // console.log( propName + ': ' + propValue );
+
+            if ( Array.isArray( propValue ) ) {
+                propOut = dataItemsToList( propValue );
+            }
+            else if ( typeof propValue  == 'object' ) {
+                propOut += dataItemsToList( propValue.list );
+            }
+            else if ( typeof propValue  == 'boolean' ) {
+                if ( prop === 'cyr' && propValue ) {
+                    cyrClass = 'cyr';
+                }
+            }
+            else {
+                propOut += propValue;
+            }
+
+            if ( propOut ) {
+                out += '<td>' + propOut + '</td>';
+                }
+        }
+
+        out = '<tr class=\'users--' + cyrClass + '\'>' + out + '</tr>';
+
+        return out;
     }
 
     function uniq( list ) {
@@ -88,19 +117,16 @@ var dataItemObj = function () {
     }
 
     function dataItemsToList ( dataItems ) {
-        console.log( 'dataItemsToList ' );
+        // console.log( 'dataItemsToList ' );
         var list = dataItems.map( itemToLi ).join('');
-        console.log(list );
+        list = '<ul class=\'content__list\'>' + list + '</ul>';
+        // console.log(list );
         return list;
     }
 
     function itemToLi ( item ) {
-        return '<li class=\'data__item\'>' + item + '</li>';
+        return '<li class=\'content__item\'>' + item + '</li>';
     }
-
-    // function linkOnClick () {
-    //     console.log(key);
-    // }
 
 } // End dataItemObj
 
