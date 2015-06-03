@@ -136,7 +136,7 @@ var dataItemObj = function () {
             }
 
             if ( prop == 'positions' && item['positionDepends'] ) {
-                propOut += '<h3 class=\'depends\'>' + item['positionDepends'] + ':</h3>';
+                propOut += '<h4 class=\'depends\'>' + item['positionDepends'] + ':</h4>';
             }
 
             if ( Array.isArray( propValue ) ) {
@@ -155,7 +155,7 @@ var dataItemObj = function () {
             }
 
             if ( prop == 'positions' && item['positionNotes'] ) {
-                propOut += '<h3 class=\'notes\'>Position Notes:</h3>';
+                propOut += '<h4 class=\'notes\'>Position Notes:</h4>';
                 propOut += dataItemsToList( item['positionNotes'] );
             }
 
