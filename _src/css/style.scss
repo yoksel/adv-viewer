@@ -7,22 +7,31 @@ UL {
     margin: 0;
     padding: 0;
     }
+    .depends + UL {
+        margin-top: .5em;
+        }
 LI {
     list-style: none;
 
     &:before {
-        content: "— ";
-        color: rgba(0,0,0,.6);
+        content: "\2022";
+        margin-right: .4em;
+        color: rgba(0,0,0,.3);
         }
     }
 
 TH {
-    font-size: 2em;
+    font-size: 1.2em;
     }
 TD {
     padding: .5em;
     vertical-align: top;
     }
+    .column-heads TD {
+        background: hsl(100,0%,93%);
+        font-weight: bold;
+        text-align: center;
+        }
 
 .l-wrapper {
     min-width: 900px;

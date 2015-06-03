@@ -72,9 +72,11 @@ var dataItemObj = function () {
             dataItems = data.map( getData ).join('');
         }
         else {
+
             var newData = dataSortByKey();
             for ( dataKey in newData ) {
                 dataItems += '<tr><th colspan=6>' + dataKey + '</th></tr>';
+                dataItems += getTableHead();
                 var newDataItem = newData[ dataKey ];
                 dataItems += newDataItem.map( getData ).join('');
             }
@@ -87,6 +89,19 @@ var dataItemObj = function () {
         return dataContent;
     }
 
+    function getTableHead() {
+        var out = '';
+
+        for ( thKey in mapTablehead ) {
+            out += '<td>' + mapTablehead[thKey] + '</td>';
+        }
+
+        out = '<tr class=\'column-heads\'>' + out + '</tr>';
+
+        return out;
+
+    }
+
     function getData ( item ) {
         var out = '';
         var cyrClass = 'noneCyr';
@@ -96,7 +111,7 @@ var dataItemObj = function () {
             var propName = prop;
             var propValue = item[ propName ];
 
-            if ( prop == 'sizesMode' ) {
+            if ( prop == 'sizesMode' || prop == 'positionDepends' ) {
                 continue;
             }
             if ( prop === 'cyr' ) {
@@ -106,8 +121,17 @@ var dataItemObj = function () {
                 continue;
             }
 
+            if ( prop == 'positions' && item['positionDepends'] ) {
+                propOut += '<b class=\'depends\'>' + item['positionDepends'] + ':</b>';
+            }
+
             if ( Array.isArray( propValue ) ) {
-                propOut = dataItemsToList( propValue );
+                if ( prop == 'sizes' && item['sizesMode'] == 'or' ) {
+                    propOut += propValue.join(' / ');
+                }
+                else {
+                    propOut += dataItemsToList( propValue );
+                }
             }
             else if ( typeof propValue  == 'object' ) {
                 propOut += dataItemsToList( propValue.list );
@@ -116,9 +140,6 @@ var dataItemObj = function () {
                 propOut += propValue;
             }
 
-            if ( prop == 'sizes' && item['sizesMode'] == 'or' ) {
-                propOut += item['sizesMode'];
-            }
 
             if ( propOut ) {
                 out += '<td>' + propOut + '</td>';
@@ -175,14 +196,17 @@ var dataItemObj = function () {
 
     function itemToLi ( item ) {
         if ( item.indexOf('LJSUP') >= 0 ){
-            item = wrapJiraLink ( item );
+            item = wrapWithLink ( item, jiraLink );
+        }
+        else if ( item.indexOf('ONTD') >= 0 ) {
+            item = wrapWithLink ( item, ontdLink );
         }
         return '<li class=\'content__item\'>' + item + '</li>';
     }
 
-    function wrapJiraLink ( str ) {
-        var jiraTaskUrl = jiraLink + str;
-        var out = '<a href=\'' + jiraTaskUrl + '\'>' + str + '</a>';
+    function wrapWithLink ( str, link ) {
+        var newUrl = link + str;
+        var out = '<a href=\'' + newUrl + '\'>' + str + '</a>';
         return out;
     }
 
