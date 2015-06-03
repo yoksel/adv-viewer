@@ -3,6 +3,10 @@ BODY {
     background: #FFF;
     }
 
+A {
+    color: hsl(200,90%,30%);
+    }
+
 UL {
     margin: 0;
     padding: 0;
@@ -22,6 +26,7 @@ LI {
 
 TH {
     font-size: 1.2em;
+    line-height: 3;
     }
 TD {
     padding: .5em;
@@ -33,27 +38,39 @@ TD {
         text-align: center;
         }
 
+H1,
+H2,
+H3 {
+    margin: 0 0 .5em;
+    }
+    UL + H3 {
+        margin-top: .5em;
+        }
+
 .l-wrapper {
     min-width: 900px;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1em;
     box-sizing: border-box;
     border: 1px solid #DDD;
     }
 
 .nav {
     margin-bottom: 1em;
-    padding-bottom: 1em;
     border-bottom: 1px solid #DDD;
 
     &__link {
         display: inline-block;
-        margin-right: 1em;
+        padding: 1em;
         }
     }
+    .current {
+        background: hsl(20,100%,85%);
+        color: hsl(20,100%,30%);
+        }
 
 .data__list {
+    padding: 1em;
     /*border: 2px solid orange;*/
     }
     .data__item {

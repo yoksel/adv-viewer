@@ -3,6 +3,10 @@ BODY {
   background: #FFF;
 }
 
+A {
+  color: #086391;
+}
+
 UL {
   margin: 0;
   padding: 0;
@@ -23,6 +27,7 @@ LI:before {
 
 TH {
   font-size: 1.2em;
+  line-height: 3;
 }
 
 TD {
@@ -36,11 +41,20 @@ TD {
   text-align: center;
 }
 
+H1,
+H2,
+H3 {
+  margin: 0 0 .5em;
+}
+
+UL + H3 {
+  margin-top: .5em;
+}
+
 .l-wrapper {
   min-width: 900px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1em;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -49,15 +63,20 @@ TD {
 
 .nav {
   margin-bottom: 1em;
-  padding-bottom: 1em;
   border-bottom: 1px solid #DDD;
 }
 .nav__link {
   display: inline-block;
-  margin-right: 1em;
+  padding: 1em;
+}
+
+.current {
+  background: #ffccb3;
+  color: #993300;
 }
 
 .data__list {
+  padding: 1em;
   /*border: 2px solid orange;*/
 }
 

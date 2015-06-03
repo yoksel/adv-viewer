@@ -2,6 +2,7 @@
 // console.log(data);
 var doc = document;
 var navElem = doc.querySelector('.nav');
+var navCurrentClass = 'current';
 var wrapperElem = doc.querySelector('.l-wrapper');
 var dataElem = doc.querySelector('.data__list');
 var dataItemClass = 'data__item';
@@ -37,6 +38,14 @@ var dataItemObj = function () {
         contentElem = createContent();
 
         linkElem.onclick = function() {
+            var currentLink = doc.querySelector('.' + navCurrentClass);
+            console.log( currentLink );
+            if ( currentLink ) {
+                console.log( currentLink );
+                currentLink.classList.remove( navCurrentClass );
+            }
+            this.classList.add( navCurrentClass );
+
             var visibleElems = doc.querySelectorAll('.' + dataItemVisibleClass);
 
             for (var i = 0; i < visibleElems.length; i++) {
@@ -49,9 +58,12 @@ var dataItemObj = function () {
 
     function createLink() {
         var liItem = doc.createElement('a');
-        liItem.setAttribute('id', key);
-        liItem.setAttribute('href', '#');
-        liItem.setAttribute('class', 'nav__link');
+        liItem.id = key;
+        liItem.href = '#';
+        liItem.classList.add('nav__link');
+        if ( pos == 0 ){
+            liItem.classList.add( navCurrentClass );
+        }
         liItem.innerText = map[key];
 
         var link = navElem.insertBefore(liItem, null);
@@ -111,7 +123,9 @@ var dataItemObj = function () {
             var propName = prop;
             var propValue = item[ propName ];
 
-            if ( prop == 'sizesMode' || prop == 'positionDepends' ) {
+            if ( prop == 'sizesMode'
+                || prop == 'positionDepends'
+                || prop == 'positionNotes' ) {
                 continue;
             }
             if ( prop === 'cyr' ) {
@@ -122,7 +136,7 @@ var dataItemObj = function () {
             }
 
             if ( prop == 'positions' && item['positionDepends'] ) {
-                propOut += '<b class=\'depends\'>' + item['positionDepends'] + ':</b>';
+                propOut += '<h3 class=\'depends\'>' + item['positionDepends'] + ':</h3>';
             }
 
             if ( Array.isArray( propValue ) ) {
@@ -138,6 +152,11 @@ var dataItemObj = function () {
             }
             else {
                 propOut += propValue;
+            }
+
+            if ( prop == 'positions' && item['positionNotes'] ) {
+                propOut += '<h3 class=\'notes\'>Position Notes:</h3>';
+                propOut += dataItemsToList( item['positionNotes'] );
             }
 
 
