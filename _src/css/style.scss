@@ -7,14 +7,22 @@ A {
     color: hsl(200,90%,30%);
     }
     .external-link:before {
-        content: '\2192';
+        content: '\203a';
         display: inline-block;
+        width: 1em;
+        height: 1em;
         margin-left: .2em;
+        background: hsla(200,90%,30%, .5);
+        border-radius: 50%;
+        text-align: center;
         text-decoration: none;
+        font-size: 1em;
+        line-height: .9;
+        color: #FFF;
         }
 
 :target {
-    animation: bgcolor 1s;
+    animation: bgcolor 1.5s;
     }
 
 @keyframes bgcolor {
@@ -72,15 +80,14 @@ H4 {
 
 .l-wrapper {
     min-width: 900px;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
-    box-sizing: border-box;
-    border: 1px solid #DDD;
     }
 
+/* Nav */
 .nav {
     margin-bottom: 1em;
-    border-bottom: 1px solid #DDD;
+    border: 1px solid #DDD;
 
     &__link {
         display: inline-block;
@@ -91,9 +98,9 @@ H4 {
         background: hsl(20,100%,85%);
         color: hsl(20,100%,30%);
         }
+
 /* Data */
 .data__list {
-    padding: 1em;
     }
     .data__item {
         display: none;
@@ -101,6 +108,7 @@ H4 {
     .data__item--visible {
         display: block;
         }
+
 /* Cyr or noneCyr */
 .users--undef {
     background: hsl(40,80%,92%);

@@ -158,7 +158,7 @@ var dataItemObj = function () {
 
             if ( prop == 'positions' && item['positionNotes'] ) {
                 propOut += '<h4 class=\'notes\'>Position Notes:</h4>';
-                propOut += dataItemsToList( item['positionNotes'] );
+                propOut += dataItemsToList( item['positionNotes'], 'noJump' );
             }
 
 
@@ -209,8 +209,12 @@ var dataItemObj = function () {
         });
     }
 
-    function dataItemsToList ( dataItems ) {
-        var list = dataItems.map( itemToLi ).join('');
+    function dataItemsToList ( dataItems, hasJump ) {
+        var func = itemToLi;
+        if ( hasJump && hasJump == 'noJump' ){
+            func = itemToLiNoJump;
+        }
+        var list = dataItems.map( func ).join('');
         list = '<ul class=\'content__list\'>' + list + '</ul>';
         return list;
     }
@@ -218,6 +222,11 @@ var dataItemObj = function () {
     function itemToLi ( item ) {
         item = findLinkInMap ( item );
         item = wrapWithJump( item );
+        return '<li class=\'content__item\'>' + item + '</li>';
+    }
+
+    function itemToLiNoJump ( item ) {
+        item = findLinkInMap ( item );
         return '<li class=\'content__item\'>' + item + '</li>';
     }
 
