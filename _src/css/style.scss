@@ -37,6 +37,9 @@ TD {
         font-weight: bold;
         text-align: center;
         }
+    .td-jira {
+        min-width: 110px;
+        }
 
 H1,
 H2,
@@ -83,6 +86,9 @@ H4 {
         /*border: 1px solid yellowgreen;*/
         }
 
+.users--undef {
+    background: hsl(40,80%,92%);
+    }
 .users--cyr {
     background: hsl(100,60%,90%);
     }

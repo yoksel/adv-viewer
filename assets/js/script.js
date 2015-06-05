@@ -87,7 +87,14 @@ var dataItemObj = function () {
 
             var newData = dataSortByKey();
             for ( dataKey in newData ) {
-                dataItems += '<tr><th colspan=6>' + dataKey + '</th></tr>';
+                var thText = dataKey;
+                if ( dataKey === 'true' ){
+                    thText = 'Cyr';
+                }
+                else if ( dataKey === 'false' ){
+                    thText = 'NoneCyr';
+                }
+                dataItems += '<tr><th colspan=7>' + thText + '</th></tr>';
                 dataItems += getTableHead();
                 var newDataItem = newData[ dataKey ];
                 dataItems += newDataItem.map( getData ).join('');
@@ -105,7 +112,7 @@ var dataItemObj = function () {
         var out = '';
 
         for ( thKey in mapTablehead ) {
-            out += '<td>' + mapTablehead[thKey] + '</td>';
+            out += '<td class=\'td-' + thKey + '\'>' + mapTablehead[thKey] + '</td>';
         }
 
         out = '<tr class=\'column-heads\'>' + out + '</tr>';
@@ -116,7 +123,7 @@ var dataItemObj = function () {
 
     function getData ( item ) {
         var out = '';
-        var cyrClass = 'noneCyr';
+        var cyrClass = 'undef';
 
         for ( prop in item ) {
             var propOut = '';
@@ -129,8 +136,11 @@ var dataItemObj = function () {
                 continue;
             }
             if ( prop === 'cyr' ) {
-                if ( propValue ) {
+                if ( propValue === true) {
                     cyrClass = 'cyr';
+                }
+                else if ( propValue === false) {
+                    cyrClass = 'noneCyr';
                 }
                 continue;
             }
@@ -214,17 +224,28 @@ var dataItemObj = function () {
     }
 
     function itemToLi ( item ) {
-        if ( item.indexOf('LJSUP') >= 0 ){
-            item = wrapWithLink ( item, jiraLink );
-        }
-        else if ( item.indexOf('ONTD') >= 0 ) {
-            item = wrapWithLink ( item, ontdLink );
-        }
+        item = findLinkInMap ( item );
         return '<li class=\'content__item\'>' + item + '</li>';
     }
 
-    function wrapWithLink ( str, link ) {
-        var newUrl = link + str;
+    function findLinkInMap ( str ) {
+        var out = str;
+
+        for ( item in mapLinks ) {
+            if( str.indexOf( item ) >= 0 ){
+                out = wrapWithLink ( str, mapLinks[item].url, mapLinks[item].mode );
+            }
+        }
+
+        return out;
+    }
+
+    function wrapWithLink ( str, link, mode ) {
+        var newUrl = link;
+
+        if ( mode && mode == 'add' ) {
+            newUrl = link + str;
+        }
         var out = '<a href=\'' + newUrl + '\'>' + str + '</a>';
         return out;
     }

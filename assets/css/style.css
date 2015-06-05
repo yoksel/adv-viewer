@@ -41,6 +41,10 @@ TD {
   text-align: center;
 }
 
+.td-jira {
+  min-width: 110px;
+}
+
 H1,
 H2,
 H3,
@@ -89,6 +93,10 @@ UL + H4 {
 .data__item--visible {
   display: block;
   /*border: 1px solid yellowgreen;*/
+}
+
+.users--undef {
+  background: #fbf0da;
 }
 
 .users--cyr {
