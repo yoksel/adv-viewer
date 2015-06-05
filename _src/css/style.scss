@@ -12,6 +12,20 @@ A {
         margin-left: .2em;
         text-decoration: none;
         }
+
+:target {
+    animation: bgcolor 1s;
+    }
+
+@keyframes bgcolor {
+    from {
+        background: gold;
+    }
+    to {
+        background: transparent;
+    }
+}
+
 UL {
     margin: 0;
     padding: 0;
