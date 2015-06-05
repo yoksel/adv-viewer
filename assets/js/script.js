@@ -8,6 +8,8 @@ var dataElem = doc.querySelector('.data__list');
 var dataItemClass = 'data__item';
 var dataItemVisibleClass = dataItemClass + '--visible';
 
+var dataKeys = {};
+
 function fillPage () {
 
     var pos = 0;
@@ -83,6 +85,9 @@ var dataItemObj = function () {
                 }
                 dataItems += '<tr><th colspan=\'7\'  id=\'' + thText + '\'>' + thText + '</th></tr>';
                 dataItems += getTableHead();
+
+                dataKeys[thText] = key;
+
                 var newDataItem = newData[ dataKey ];
                 dataItems += newDataItem.map( getData ).join('');
             }
@@ -275,9 +280,11 @@ function showContentByHastag () {
         var contentElem = doc.querySelector('#content--' + urlHash);
 
         if ( linkElem == null ) {
-            return
+            urlHash = dataKeys[urlHash];
+
+            linkElem = doc.querySelector('#link--' + urlHash);
+            contentElem = doc.querySelector('#content--' + urlHash);
         }
-        //console.log(linkElem);
         showTab ( linkElem, contentElem );
     }
 }
