@@ -21,6 +21,8 @@ function fillPage () {
 
         pos++;
     }
+
+    jumpToContentActions();
 }
 
 var dataItemObj = function () {
@@ -37,21 +39,7 @@ var dataItemObj = function () {
         contentElem = createContent();
 
         linkElem.onclick = function() {
-            linkOnClick( this, contentElem );
-            // var currentLink = doc.querySelector('.' + navCurrentClass);
-
-            // if ( currentLink ) {
-            //     currentLink.classList.remove( navCurrentClass );
-            // }
-            // this.classList.add( navCurrentClass );
-
-            // var visibleElems = doc.querySelectorAll('.' + dataItemVisibleClass);
-
-            // for (var i = 0; i < visibleElems.length; i++) {
-            //     visibleElems[i].classList.remove( dataItemVisibleClass );
-            // };
-
-            // contentElem.classList.add( dataItemVisibleClass );
+            showTab( this, contentElem );
         }
     }
 
@@ -93,7 +81,7 @@ var dataItemObj = function () {
                 else if ( dataKey === 'false' ){
                     thText = 'NoneCyr';
                 }
-                dataItems += '<tr><th colspan=7>' + thText + '</th></tr>';
+                dataItems += '<tr><th colspan=\'7\'  id=\'' + thText + '\'>' + thText + '</th></tr>';
                 dataItems += getTableHead();
                 var newDataItem = newData[ dataKey ];
                 dataItems += newDataItem.map( getData ).join('');
@@ -160,7 +148,7 @@ var dataItemObj = function () {
                 propOut += dataItemsToList( propValue.list );
             }
             else {
-                propOut += propValue;
+                propOut += wrapWithJump( propValue );
             }
 
             if ( prop == 'positions' && item['positionNotes'] ) {
@@ -224,6 +212,7 @@ var dataItemObj = function () {
 
     function itemToLi ( item ) {
         item = findLinkInMap ( item );
+        item = wrapWithJump( item );
         return '<li class=\'content__item\'>' + item + '</li>';
     }
 
@@ -231,7 +220,7 @@ var dataItemObj = function () {
         var out = str;
 
         for ( item in mapLinks ) {
-            if( str.indexOf( item ) >= 0 ){
+            if ( str.indexOf( item ) >= 0 ){
                 out = wrapWithLink ( str, mapLinks[item].url, mapLinks[item].mode );
             }
         }
@@ -245,19 +234,25 @@ var dataItemObj = function () {
         if ( mode && mode == 'add' ) {
             newUrl = link + str;
         }
-        var out = '<a href=\'' + newUrl + '\'>' + str + '</a>';
+        var out =  str + '<a href=\'' + newUrl + '\' class=\'external-link\'></a>';
         return out;
+    }
+
+    function wrapWithJump( str ) {
+        return '<span class=\'jump-to-content\' data-prop=\'' + prop + '\'>' + str + '</span>';
     }
 
 } // End dataItemObj
 
-function linkOnClick ( linkElem, contentElem ) {
+function showTab ( linkElem, contentElem ) {
     var currentLink = doc.querySelector('.' + navCurrentClass);
 
     if ( currentLink ) {
         currentLink.classList.remove( navCurrentClass );
     }
-    linkElem.classList.add( navCurrentClass );
+    if ( linkElem ) {
+        linkElem.classList.add( navCurrentClass );
+    }
 
     var visibleElems = doc.querySelectorAll('.' + dataItemVisibleClass);
 
@@ -265,7 +260,9 @@ function linkOnClick ( linkElem, contentElem ) {
         visibleElems[i].classList.remove( dataItemVisibleClass );
     };
 
-    contentElem.classList.add( dataItemVisibleClass );
+    if ( contentElem ) {
+        contentElem.classList.add( dataItemVisibleClass );
+    }
 }
 
 // Show tab by url
@@ -277,8 +274,33 @@ function showContentByHastag () {
         var linkElem = doc.querySelector('#link--' + urlHash);
         var contentElem = doc.querySelector('#content--' + urlHash);
 
-        linkOnClick ( linkElem, contentElem )
+        if ( linkElem == null ) {
+            return
+        }
+        //console.log(linkElem);
+        showTab ( linkElem, contentElem );
     }
+}
+
+function jumpToContentActions () {
+    var jumpToContentItems = doc.querySelectorAll('.jump-to-content');
+
+    for (var i = 0; i < jumpToContentItems.length; i++) {
+        var jumpToContentItem = jumpToContentItems[i];
+
+        jumpToContentItem.onclick = function () {
+            var hash = this.dataset.prop;
+            console.log(this.innerText);
+            console.log(this.dataset.prop);
+            var linkElem = doc.querySelector('#link--' + hash);
+            var contentElem = doc.querySelector('#content--' + hash);
+            console.log(linkElem);
+            console.log(hash);
+            showTab ( linkElem, contentElem );
+            doc.location.hash = this.innerText;
+        }
+
+    };
 }
 
 fillPage ();

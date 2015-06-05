@@ -7,6 +7,13 @@ A {
   color: #086391;
 }
 
+.external-link:before {
+  content: '\2192';
+  display: inline-block;
+  margin-left: .2em;
+  text-decoration: none;
+}
+
 UL {
   margin: 0;
   padding: 0;
@@ -104,6 +111,11 @@ UL + H4 {
 
 .users--noneCyr {
   background: #d6ebf5;
+}
+
+.jump-to-content {
+  border-bottom: 1px dotted;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.unprefixed.css.map */
