@@ -80,21 +80,20 @@ UL + H4 {
   color: #993300;
 }
 
+/* Data */
 .data__list {
   padding: 1em;
-  /*border: 2px solid orange;*/
 }
 
 .data__item {
   display: none;
-  /*border: 1px solid gold;*/
 }
 
 .data__item--visible {
   display: block;
-  /*border: 1px solid yellowgreen;*/
 }
 
+/* Cyr or noneCyr */
 .users--undef {
   background: #fbf0da;
 }

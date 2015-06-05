@@ -72,20 +72,17 @@ H4 {
         background: hsl(20,100%,85%);
         color: hsl(20,100%,30%);
         }
-
+/* Data */
 .data__list {
     padding: 1em;
-    /*border: 2px solid orange;*/
     }
     .data__item {
         display: none;
-        /*border: 1px solid gold;*/
         }
     .data__item--visible {
         display: block;
-        /*border: 1px solid yellowgreen;*/
         }
-
+/* Cyr or noneCyr */
 .users--undef {
     background: hsl(40,80%,92%);
     }

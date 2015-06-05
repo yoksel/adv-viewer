@@ -1,5 +1,6 @@
-// console.log('hello');
-// console.log(data);
+// Need templates and countries
+
+
 var doc = document;
 var navElem = doc.querySelector('.nav');
 var navCurrentClass = 'current';
