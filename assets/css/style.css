@@ -124,16 +124,45 @@ UL + H4 {
 }
 
 /* Cyr or noneCyr */
+.td--source {
+  position: relative;
+  padding-bottom: 2em;
+}
+.td--source:after {
+  display: block;
+  position: absolute;
+  left: .3em;
+  bottom: .3em;
+  padding: .1em .4em;
+  border-radius: 5px;
+  font-style: italic;
+}
+
 .users--undef {
   background: #fbf0da;
+}
+.users--undef .td--source:after {
+  content: "undef";
+  background: #f0c775;
+  color: #a17112;
 }
 
 .users--cyr {
   background: #e0f5d6;
 }
+.users--cyr .td--source:after {
+  content: "cyr";
+  background: #a3e085;
+  color: #478f24;
+}
 
 .users--noneCyr {
   background: #d6ebf5;
+}
+.users--noneCyr .td--source:after {
+  content: "noCyr";
+  background: #85c2e0;
+  color: #246b8f;
 }
 
 .jump-to-content {

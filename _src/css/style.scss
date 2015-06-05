@@ -110,14 +110,50 @@ H4 {
         }
 
 /* Cyr or noneCyr */
+.td--source {
+    position: relative;
+    padding-bottom: 2em;
+
+    &:after {
+        display: block;
+        position: absolute;
+        left: .3em;
+        bottom: .3em;
+        padding: .1em .4em;
+        border-radius: 5px;
+        font-style: italic;
+        }
+    }
+
 .users--undef {
     background: hsl(40,80%,92%);
+    .td--source {
+        &:after {
+            content: "undef";
+            background: hsl(40,80%,70%);
+            color: hsl(40,80%,35%);
+            }
+        }
     }
 .users--cyr {
     background: hsl(100,60%,90%);
+    .td--source {
+        &:after {
+            content: "cyr";
+            background: hsl(100,60%,70%);
+            color: hsl(100,60%,35%);
+            }
+        }
     }
 .users--noneCyr {
     background: hsl(200,60%,90%);
+    .td--source {
+        &:after {
+            content: "noCyr";
+            background: hsl(200,60%,70%);
+            color: hsl(200,60%,35%);
+            }
+        }
     }
 
 .jump-to-content {

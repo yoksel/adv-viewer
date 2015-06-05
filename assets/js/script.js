@@ -163,7 +163,7 @@ var dataItemObj = function () {
 
 
             if ( propOut ) {
-                out += '<td>' + propOut + '</td>';
+                out += '<td class=\'td--' + prop + '\'>' + propOut + '</td>';
                 }
         }
 
