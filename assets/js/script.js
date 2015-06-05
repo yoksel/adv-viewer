@@ -1,6 +1,5 @@
 // Need templates and countries
 
-
 var doc = document;
 var navElem = doc.querySelector('.nav');
 var navCurrentClass = 'current';
@@ -22,7 +21,6 @@ function fillPage () {
 
         pos++;
     }
-
 }
 
 var dataItemObj = function () {
@@ -39,28 +37,28 @@ var dataItemObj = function () {
         contentElem = createContent();
 
         linkElem.onclick = function() {
-            var currentLink = doc.querySelector('.' + navCurrentClass);
-            console.log( currentLink );
-            if ( currentLink ) {
-                console.log( currentLink );
-                currentLink.classList.remove( navCurrentClass );
-            }
-            this.classList.add( navCurrentClass );
+            linkOnClick( this, contentElem );
+            // var currentLink = doc.querySelector('.' + navCurrentClass);
 
-            var visibleElems = doc.querySelectorAll('.' + dataItemVisibleClass);
+            // if ( currentLink ) {
+            //     currentLink.classList.remove( navCurrentClass );
+            // }
+            // this.classList.add( navCurrentClass );
 
-            for (var i = 0; i < visibleElems.length; i++) {
-                visibleElems[i].classList.remove( dataItemVisibleClass );
-            };
+            // var visibleElems = doc.querySelectorAll('.' + dataItemVisibleClass);
 
-            contentElem.classList.add( dataItemVisibleClass );
+            // for (var i = 0; i < visibleElems.length; i++) {
+            //     visibleElems[i].classList.remove( dataItemVisibleClass );
+            // };
+
+            // contentElem.classList.add( dataItemVisibleClass );
         }
     }
 
     function createLink() {
         var liItem = doc.createElement('a');
-        liItem.id = key;
-        liItem.href = '#';
+        liItem.id = 'link--' + key;
+        liItem.href = '#' + key;
         liItem.classList.add('nav__link');
         if ( pos == 0 ){
             liItem.classList.add( navCurrentClass );
@@ -74,7 +72,7 @@ var dataItemObj = function () {
     function createContent() {
         var dataItem = doc.createElement('div');
         var dataItems = '';
-        dataItem.id = 'content-' + key;
+        dataItem.id = 'content--' + key;
         dataItem.classList.add( dataItemClass );
 
         if ( pos == 0 ) {
@@ -253,5 +251,35 @@ var dataItemObj = function () {
 
 } // End dataItemObj
 
+function linkOnClick ( linkElem, contentElem ) {
+    var currentLink = doc.querySelector('.' + navCurrentClass);
+
+    if ( currentLink ) {
+        currentLink.classList.remove( navCurrentClass );
+    }
+    linkElem.classList.add( navCurrentClass );
+
+    var visibleElems = doc.querySelectorAll('.' + dataItemVisibleClass);
+
+    for (var i = 0; i < visibleElems.length; i++) {
+        visibleElems[i].classList.remove( dataItemVisibleClass );
+    };
+
+    contentElem.classList.add( dataItemVisibleClass );
+}
+
+// Show tab by url
+function showContentByHastag () {
+    var urlHash = doc.location.hash;
+    if ( urlHash ) {
+        urlHash = urlHash.substr(1);
+
+        var linkElem = doc.querySelector('#link--' + urlHash);
+        var contentElem = doc.querySelector('#content--' + urlHash);
+
+        linkOnClick ( linkElem, contentElem )
+    }
+}
 
 fillPage ();
+showContentByHastag ();
