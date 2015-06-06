@@ -220,18 +220,18 @@ var dataItemObj = function () {
     }
 
     function itemToLi ( item ) {
-        item = findLinkInMap ( item );
-        item = wrapWithJump( item );
-        return '<li class=\'content__item\'>' + item + '</li>';
+        var itemLink = findLinkInMap ( item );
+        var itemJump = wrapWithJump( item );
+        return '<li class=\'content__item\'>' + itemJump + itemLink + '</li>';
     }
 
     function itemToLiNoJump ( item ) {
-        item = findLinkInMap ( item );
+        //item = findLinkInMap ( item );
         return '<li class=\'content__item\'>' + item + '</li>';
     }
 
     function findLinkInMap ( str ) {
-        var out = str;
+        var out = '';
 
         for ( item in mapLinks ) {
             if ( str.indexOf( item ) >= 0 ){
@@ -248,7 +248,7 @@ var dataItemObj = function () {
         if ( mode && mode == 'add' ) {
             newUrl = link + str;
         }
-        var out =  str + '<a href=\'' + newUrl + '\' class=\'external-link\'></a>';
+        var out = '<a href=\'' + newUrl + '\' class=\'external-link\'></a>';
         return out;
     }
 

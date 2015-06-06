@@ -15,6 +15,7 @@ A {
   margin-left: .2em;
   background: rgba(8, 99, 145, 0.5);
   border-radius: 50%;
+  vertical-align: top;
   text-align: center;
   text-decoration: none;
   font-size: 1em;
@@ -56,6 +57,9 @@ UL {
 LI {
   list-style: none;
 }
+LI:not(:last-child) {
+  margin-bottom: .5em;
+}
 LI:before {
   content: "\2022";
   margin-right: .4em;
@@ -82,20 +86,21 @@ TD {
   min-width: 110px;
 }
 
+/* Headers */
 H1,
 H2,
 H3,
 H4 {
-  margin: 0 0 .5em;
+  margin: 0 0 .35em;
 }
 
 UL + H4 {
-  margin-top: .5em;
+  margin-top: 1em;
 }
 
 .l-wrapper {
   min-width: 900px;
-  max-width: 1300px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
