@@ -306,12 +306,8 @@ function jumpToContentActions () {
 
         jumpToContentItem.onclick = function () {
             var hash = this.dataset.prop;
-            console.log(this.innerText);
-            console.log(this.dataset.prop);
             var linkElem = doc.querySelector('#link--' + hash);
             var contentElem = doc.querySelector('#content--' + hash);
-            console.log(linkElem);
-            console.log(hash);
             showTab ( linkElem, contentElem );
             doc.location.hash = this.innerText;
         }
