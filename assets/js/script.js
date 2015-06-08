@@ -104,7 +104,7 @@ var dataItemObj = function () {
         var out = '';
 
         for ( thKey in mapTablehead ) {
-            out += '<td class=\'td-' + thKey + '\'>' + mapTablehead[thKey] + '</td>';
+            out += '<th class=\'column-head column-head--' + thKey + '\'>' + mapTablehead[thKey] + '</th>';
         }
 
         out = '<tr class=\'column-heads\'>' + out + '</tr>';

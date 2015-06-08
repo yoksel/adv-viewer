@@ -76,14 +76,14 @@ TD {
   vertical-align: top;
 }
 
-.column-heads TD {
+.column-head {
   background: #ededed;
   font-weight: bold;
   text-align: center;
 }
 
-.td-jira {
-  min-width: 110px;
+.column-head--jira {
+  min-width: 140px;
 }
 
 /* Headers */
