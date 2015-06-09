@@ -1,5 +1,4 @@
 *data*
-*config*
 node_modules
 .sass-cache
 *.unprefixed.css*

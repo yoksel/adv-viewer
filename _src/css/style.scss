@@ -54,14 +54,6 @@ LI {
         margin-right: .4em;
         color: rgba(0,0,0,.3);
         }
-
-    .td--jira & {
-        display: inline-block;
-        margin-right: 1.5em;
-        }
-        .td--jira &:before {
-            content: none;
-            }
     }
 
 TH {
@@ -71,17 +63,14 @@ TH {
 TD {
     padding: .5em;
     vertical-align: top;
-    &:empty {
-        padding: 0;
-        }
     }
     .column-head {
         background: hsl(100,0%,93%);
         font-weight: bold;
         text-align: center;
         }
-    .td--jira {
-        border-bottom: 10px solid white;
+    .column-head--jira {
+        min-width: 140px;
         }
 
 /* Headers */
@@ -152,7 +141,6 @@ H4 {
             }
         }
     }
-
 .users--cyr {
     background: hsl(100,60%,90%);
     .td--source {
@@ -163,7 +151,6 @@ H4 {
             }
         }
     }
-
 .users--noneCyr {
     background: hsl(200,60%,90%);
     .td--source {

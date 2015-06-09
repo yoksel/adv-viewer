@@ -10,8 +10,6 @@ var dataItemVisibleClass = dataItemClass + '--visible';
 
 var dataKeys = {};
 
-var colspan = 6;
-
 function fillPage () {
 
     var pos = 0;
@@ -85,7 +83,7 @@ var dataItemObj = function () {
                 else if ( dataKey === 'false' ){
                     thText = 'NoneCyr';
                 }
-                dataItems += '<tr><th colspan=\'' + colspan + '\'  id=\'' + thText + '\'>' + thText + '</th></tr>';
+                dataItems += '<tr><th colspan=\'7\'  id=\'' + thText + '\'>' + thText + '</th></tr>';
                 dataItems += getTableHead();
 
                 dataKeys[thText] = key;
@@ -117,7 +115,6 @@ var dataItemObj = function () {
 
     function getData ( item ) {
         var out = '';
-        var jiraOut = '';
         var cyrClass = 'undef';
 
         for ( prop in item ) {
@@ -165,17 +162,12 @@ var dataItemObj = function () {
             }
 
 
-            if ( prop == 'jira' ) {
-                jiraOut += '<td class=\'td--' + prop + '\' colspan=\'' + colspan + '\'>' + propOut + '</td>';
-            }
-            else {
+            if ( propOut ) {
                 out += '<td class=\'td--' + prop + '\'>' + propOut + '</td>';
-            }
-
+                }
         }
 
         out = '<tr class=\'users--' + cyrClass + '\'>' + out + '</tr>';
-        out += '<tr class=\'users--' + cyrClass + '\'>' + jiraOut + '</tr>';
 
         return out;
     }
@@ -223,9 +215,7 @@ var dataItemObj = function () {
             func = itemToLiNoJump;
         }
         var list = dataItems.map( func ).join('');
-        if ( list ) {
-            list = '<ul class=\'content__list\'>' + list + '</ul>';
-        }
+        list = '<ul class=\'content__list\'>' + list + '</ul>';
         return list;
     }
 
